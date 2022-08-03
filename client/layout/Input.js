@@ -1,5 +1,7 @@
-import { View, Text, TextInput } from 'react-native'
+import { View, Text, TextInput, StyleSheet } from 'react-native'
 import React from 'react'
+import COLORS from '../styles/_constants'
+import { mixins } from '../styles/_mixins'
 
 const Input = ({ title, properties, setProperties }) => {
 
@@ -12,8 +14,9 @@ const Input = ({ title, properties, setProperties }) => {
             {
                 title === 'text' ?
                     <React.Fragment>
-                        <Text>Text</Text>
+                        <Text style={styles.Text}>Text</Text>
                         <TextInput
+                            style={styles.Input}
                             keyboardType="default"
                             value={properties.name || ""}
                             placeholder='Enter text...'
@@ -21,9 +24,10 @@ const Input = ({ title, properties, setProperties }) => {
                         />
                     </React.Fragment> :
                     <React.Fragment>
-                        <Text>Amount</Text>
-                        <Text>(negative - epense, positive - income)</Text>
+                        <Text style={styles.Text}>Amount</Text>
+                        <Text style={{ marginTop: -4 }}>(negative - epense, positive - income)</Text>
                         <TextInput
+                            style={styles.Input}
                             keyboardType="numeric"
                             value={properties.value || ""}
                             placeholder='Enter amount...'
@@ -34,5 +38,18 @@ const Input = ({ title, properties, setProperties }) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    Text: {
+        ...mixins.roboto(COLORS.SECONDARY_TEXT())
+    },
+    Input: {
+        backgroundColor: "white",
+        marginHorizontal: 2,
+        marginVertical: 7,
+        paddingHorizontal: 6,
+        paddingVertical: 3
+    }
+})
 
 export default Input

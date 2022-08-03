@@ -2,6 +2,7 @@ import { Text, SafeAreaView, StyleSheet } from 'react-native'
 import React from 'react'
 import { mixins } from '../styles/_mixins'
 import COLORS from '../styles/_constants'
+import { useExpense } from '../context/ExpenseContext'
 
 const ACTIONS = {
     COUNT_BALANCE: 'balance',
@@ -9,7 +10,9 @@ const ACTIONS = {
     EXPENSE: 'expense'
 }
 
-const Balance = ({ expenses }) => {
+const Balance = () => {
+    const [expenses, dispatch] = useExpense()
+
     const countExpenses = ({ type }) => {
         let temp = []
         expenses.map(expense => temp.push(expense.properties.value))
@@ -54,7 +57,8 @@ const styles = StyleSheet.create({
         flexDirection: "column"
     },
     Data: {
-        alignSelf: "flex-start"
+        alignSelf: "flex-start",
+        marginVertical: 6
     },
     AccountText: {
         fontSize: 13,

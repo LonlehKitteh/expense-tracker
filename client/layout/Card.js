@@ -1,15 +1,16 @@
 import { Text, StyleSheet, SafeAreaView, TouchableWithoutFeedback, LayoutAnimation, Animated, Easing } from 'react-native'
 import React, { useState } from 'react'
-import { ACTIONS } from '../constants/constants'
+import { ACTIONS } from '../context/ExpenseContext'
 import COLORS from '../styles/_constants'
 import { mixins } from '../styles/_mixins'
+import { deleteData } from '../data/functions'
 
 const Card = ({ name, value, dispatch, id }) => {
     const [animatePress,] = useState(new Animated.Value(0))
 
     const handleLongPress = () => {
         LayoutAnimation.easeInEaseOut()
-        dispatch({ type: ACTIONS.DELETE_EXPENSE, payload: { id: id } })
+        deleteData(id, () => dispatch({ type: ACTIONS.DELETE_EXPENSE, payload: { id: id } }))
     }
 
     const handlePressIn = () => {
@@ -39,13 +40,14 @@ const Card = ({ name, value, dispatch, id }) => {
     return (
         <TouchableWithoutFeedback delayLongPress={2000} onLongPress={handleLongPress} onPressIn={handlePressIn} onPressOut={handlePressOut}>
             <SafeAreaView style={styles.Card}>
-                <SafeAreaView style={styles.View}>
-                    <Text style={styles.Name}>{name}</Text>
-                    <Text style={styles.Devider}></Text>
-                    <Text style={styles.Name}>{value > 0 ? `+ ${Number(value).toFixed(2)}` : `- ${Number(value * -1).toFixed(2)}`}</Text>
+                <SafeAreaView style={[styles.Container, { borderRightColor: value > 0 ? COLORS.SUCCESS.getColor() : COLORS.DANGER.getColor() }]}>
+                    <SafeAreaView style={styles.View}>
+                        <Text style={styles.Name}>{name}</Text>
+                        <Text style={styles.Devider}></Text>
+                        <Text style={styles.Name}>{value > 0 ? `+ ${Number(value).toFixed(2)}` : `- ${Number(value * -1).toFixed(2)}`}</Text>
+                    </SafeAreaView>
+                    <Animated.View style={[styles.Progress, { width: interpolate }]}></Animated.View>
                 </SafeAreaView>
-                <Animated.View style={[styles.Progress, { width: interpolate }]}></Animated.View>
-                <SafeAreaView style={{ borderRightColor: value > 0 ? COLORS.SUCCESS.getColor() : COLORS.DANGER.getColor() }}></SafeAreaView>
             </SafeAreaView>
         </TouchableWithoutFeedback>
     )
@@ -55,12 +57,16 @@ export default Card
 
 const styles = StyleSheet.create({
     Card: {
-        borderRadius: 3,
+        marginVertical: 4,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    Container: {
+        width: '95%',
         backgroundColor: 'white',
         borderRightColor: "green",
         borderRightWidth: 7,
-        marginVertical: 4,
-        overflow: "hidden"
+        borderRadius: 3
     },
     View: {
         padding: 10,

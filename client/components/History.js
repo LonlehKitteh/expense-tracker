@@ -1,8 +1,12 @@
 import React from 'react'
 import Section from '../layout/Section'
 import Card from '../layout/Card'
+import { useExpense } from '../context/ExpenseContext'
+import { StyleSheet, View, Text } from 'react-native'
 
-const History = ({ expenses, dispatch }) => {
+const History = () => {
+    const [expenses, dispatch] = useExpense()
+
     return (
         <Section title="History">
             {
