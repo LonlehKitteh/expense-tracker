@@ -11,7 +11,7 @@ const ACTIONS = {
 }
 
 const Balance = () => {
-    const [expenses, dispatch] = useExpense()
+    const [expenses] = useExpense()
 
     const countExpenses = ({ type }) => {
         let temp = []
@@ -35,7 +35,7 @@ const Balance = () => {
                 <Text style={styles.AccountText}>Your balance</Text>
                 <Text style={styles.AccountValue}>{`${countExpenses({ type: ACTIONS.COUNT_BALANCE })}$`}</Text>
             </SafeAreaView>
-            <SafeAreaView style={styles.Payment}>
+            <SafeAreaView style={[styles.Payment, styles.elevation]}>
                 <SafeAreaView style={styles.ViewData}>
                     <Text style={styles.PaymentText}>income</Text>
                     <Text style={styles.Income}>{`$${countExpenses({ type: ACTIONS.INCOME })}`}</Text>
@@ -76,11 +76,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: "white",
-        shadowColor: "#24445a",
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.7,
-        shadowRadius: 3,
         borderRadius: 4
+    },
+    elevation: {
+        elevation: 4,
+        shadowColor: '#42445a'
     },
     Devider: {
         height: '60%',

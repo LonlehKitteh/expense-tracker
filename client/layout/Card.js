@@ -6,7 +6,7 @@ import { mixins } from '../styles/_mixins'
 import { deleteData } from '../data/functions'
 
 const Card = ({ name, value, dispatch, id }) => {
-    const [animatePress,] = useState(new Animated.Value(0))
+    const [animatePress] = useState(new Animated.Value(0))
 
     const handleLongPress = () => {
         LayoutAnimation.easeInEaseOut()
@@ -40,7 +40,7 @@ const Card = ({ name, value, dispatch, id }) => {
     return (
         <TouchableWithoutFeedback delayLongPress={2000} onLongPress={handleLongPress} onPressIn={handlePressIn} onPressOut={handlePressOut}>
             <SafeAreaView style={styles.Card}>
-                <SafeAreaView style={[styles.Container, { borderRightColor: value > 0 ? COLORS.SUCCESS.getColor() : COLORS.DANGER.getColor() }]}>
+                <SafeAreaView style={[styles.Container, styles.elevation, { borderRightColor: value > 0 ? COLORS.SUCCESS.getColor() : COLORS.DANGER.getColor() }]}>
                     <SafeAreaView style={styles.View}>
                         <Text style={styles.Name}>{name}</Text>
                         <Text style={styles.Devider}></Text>
@@ -64,9 +64,13 @@ const styles = StyleSheet.create({
     Container: {
         width: '95%',
         backgroundColor: 'white',
-        borderRightColor: "green",
+        borderRightColor: "transparent",
         borderRightWidth: 7,
-        borderRadius: 3
+        borderRadius: 5,
+    },
+    elevation: {
+        elevation: 4,
+        shadowColor: '#42445a'
     },
     View: {
         padding: 10,
