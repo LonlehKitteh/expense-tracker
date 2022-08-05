@@ -9,10 +9,9 @@ async function setData(data) {
     }
 }
 
-async function deleteData(id, callback) {
+async function deleteData(id) {
     try {
         await AsyncStorage.removeItem(`expense-${id}`)
-        callback()
     } catch (error) {
         alert(error)
     }

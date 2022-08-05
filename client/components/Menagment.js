@@ -4,21 +4,14 @@ import { ACTIONS, useExpense } from '../context/ExpenseContext'
 import Section from '../layout/Section'
 import Input from '../layout/Input'
 import COLORS from '../styles/_constants'
-import { deleteAll, setData } from '../data/functions'
-
-function newExpense(properties) {
-    return { id: Date.now(), properties: properties }
-}
+import { deleteAll } from '../data/functions'
 
 const Menagment = ({ properties, setProperties }) => {
-    const [expenses, dispatch] = useExpense()
+    const [, dispatch] = useExpense()
 
     const handlePress = () => {
         Keyboard.dismiss();
-        (async () => {
-            await setData(newExpense(properties))
-            dispatch({ type: ACTIONS.ADD_EXPENSE, payload: newExpense(properties) })
-        })()
+        dispatch({ type: ACTIONS.ADD_EXPENSE, payload: { id: Date.now(), properties: properties } })
         setProperties({ name: "", value: 0 })
     }
 

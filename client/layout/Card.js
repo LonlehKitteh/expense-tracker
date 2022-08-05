@@ -1,16 +1,15 @@
-import { Text, StyleSheet, SafeAreaView, TouchableWithoutFeedback, LayoutAnimation, Animated, Easing } from 'react-native'
+import { Text, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Animated, Easing, LayoutAnimation } from 'react-native'
 import React, { useState } from 'react'
 import { ACTIONS } from '../context/ExpenseContext'
 import COLORS from '../styles/_constants'
 import { mixins } from '../styles/_mixins'
-import { deleteData } from '../data/functions'
 
 const Card = ({ name, value, dispatch, id }) => {
     const [animatePress] = useState(new Animated.Value(0))
 
     const handleLongPress = () => {
         LayoutAnimation.easeInEaseOut()
-        deleteData(id, () => dispatch({ type: ACTIONS.DELETE_EXPENSE, payload: { id: id } }))
+        dispatch({ type: ACTIONS.DELETE_EXPENSE, payload: { id: id } })
     }
 
     const handlePressIn = () => {

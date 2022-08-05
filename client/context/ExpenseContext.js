@@ -1,5 +1,6 @@
-import React, { useReducer, useEffect, useContext, Children } from 'react'
-import { getData } from '../data/functions'
+import React, { useReducer, useEffect, useContext } from 'react'
+import { Alert } from 'react-native'
+import { getData, setData, deleteData } from '../data/functions'
 
 export const ACTIONS = {
     GET_ALL_EXPENSES: 'get-all',
@@ -19,10 +20,23 @@ function reducer(expenses, action) {
         case ACTIONS.GET_ALL_EXPENSES:
             return action.payload
         case ACTIONS.ADD_EXPENSE:
+            if (!Object.values(action.payload.properties).every(e => e)) {
+                Alert.alert("Error", "Complete all gaps!", [{ text: 'Ok' }], { cancelable: true })
+                return expenses;
+            }
+
+            (async () => {
+                await setData(action.payload)
+            })()
+
             return [...expenses, action.payload]
         case ACTIONS.DELETE_ALL:
             return []
         case ACTIONS.DELETE_EXPENSE:
+            (async () => {
+                await deleteData(action.payload.id)
+            })();
+
             return expenses.filter(expense => expense.id !== action.payload.id)
         default:
             return expenses
